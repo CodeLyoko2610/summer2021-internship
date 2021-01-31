@@ -1,7 +1,9 @@
 import express from 'express'
 
+import { getAll } from '../controllers/discovery'
+
 const router = express.Router()
 
-router.get('/', (req, res, next) => res.json("Hello from router"))
+router.get('/', getAll)
 
 export default router
