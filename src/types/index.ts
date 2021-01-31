@@ -6,3 +6,5 @@ export type restaurant = {
   online: boolean,
   popularity: number
 }
+
+export type coords = { longitude: number, latitude: number }

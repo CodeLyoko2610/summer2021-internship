@@ -2,6 +2,7 @@ import { Request, Response, NextFunction } from 'express'
 
 import * as data from '../../restaurants.json'
 import DiscoveryServices from '../services/discovery'
+import { coords } from '../types'
 
 
 export const getAll = (req: Request, res: Response, next: NextFunction) => {
@@ -15,13 +16,15 @@ export const getAll = (req: Request, res: Response, next: NextFunction) => {
     const latVal = parseFloat(lat as string)
     if (isNaN(lonVal) || isNaN(latVal)) throw Error("Coordinates must be numbers only.")
 
-
+    const userLon = 24.941
+    const userLat = 60.1709
+    const userCoords: coords = { longitude: userLon, latitude: userLat }
 
     //Build response object
     const rawSections = [
       { "title": "Popular Restaurants", "restaurants": DiscoveryServices.sortByPopularity(data.restaurants) },
       { "title": "New Restaurants", "restaurants": DiscoveryServices.sortByLaunchDate(data.restaurants) },
-      { "title": "Nearby Restaurants", "restaurants": [] }
+      { "title": "Nearby Restaurants", "restaurants": DiscoveryServices.sortByDistance(userCoords, data.restaurants) }
     ]
 
     const response = {

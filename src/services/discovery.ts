@@ -1,7 +1,30 @@
 import stringToMillisecond from '../helpers/stringToMilliSecond'
-import { restaurant } from '../types'
+import distanceInMeters from '../helpers/distanceInMeters'
+import { restaurant, coords } from '../types'
 
-//TODO: Sort by distance closer than 1.5 km  
+//services [Common] Sort by distance closer than 1.5 km 
+const sortByDistance = (userCoords: coords, input: any) => {
+  const DISTANCE_LIMIT = 1500 //in meters  
+
+  //Temporary array holds object index and distance to user
+  const mapped = input.map((item: restaurant, i: number) => {
+    const restaurantCoords: coords = { longitude: item.location[0], latitude: item.location[1] } //longitude first
+    return { index: i, distance: distanceInMeters(userCoords, restaurantCoords) }
+  })
+
+  //Filter out objects further than distance limit
+  const filtered = mapped.filter((item: any) => item.distance <= DISTANCE_LIMIT)
+
+  //Sort by distance, from closest to furthest
+  filtered.sort((a: any, b: any) => a.distance - b.distance)
+
+  //Return the original array
+  const result = filtered.map((item: any) => {
+    return input[item.index]
+  })
+
+  return result
+}
 
 //services [Common] Sort by online
 const sortByOnline = (input: any) => {
@@ -35,6 +58,7 @@ const sortByLaunchDate = (input: any) => {
 }
 
 export default {
+  sortByDistance,
   sortByOnline,
   sortByLaunchDate,
   sortByPopularity
