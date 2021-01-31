@@ -1,6 +1,7 @@
 import stringToMillisecond from '../helpers/stringToMilliSecond'
 import { restaurant } from '../types'
 
+//TODO: Sort by distance closer than 1.5 km  
 
 //services [Common] Sort by online
 const sortByOnline = (input: any) => {
@@ -31,4 +32,10 @@ const sortByLaunchDate = (input: any) => {
   filtered.sort((a: any, b: any) => (stringToMillisecond(b.launch_date) - stringToMillisecond(a.launch_date)))
 
   return filtered
+}
+
+export default {
+  sortByOnline,
+  sortByLaunchDate,
+  sortByPopularity
 }

@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express'
 
 import * as data from '../../restaurants.json'
-import * as services from '../services/discovery'
+import DiscoveryServices from '../services/discovery'
 
 
 export const getAll = (req: Request, res: Response, next: NextFunction) => {
@@ -15,16 +15,23 @@ export const getAll = (req: Request, res: Response, next: NextFunction) => {
     const latVal = parseFloat(lat as string)
     if (isNaN(lonVal) || isNaN(latVal)) throw Error("Coordinates must be numbers only.")
 
-    //TODO: Sort by distance closer than 1.5 km  
 
 
+    //Build response object
+    const rawSections = [
+      { "title": "Popular Restaurants", "restaurants": DiscoveryServices.sortByPopularity(data.restaurants) },
+      { "title": "New Restaurants", "restaurants": DiscoveryServices.sortByLaunchDate(data.restaurants) },
+      { "title": "Nearby Restaurants", "restaurants": [] }
+    ]
 
-
+    const response = {
+      "sections": rawSections.filter(sec => sec.restaurants.length > 0)
+    }
 
     //res.json(sortByLaunchDate(data.restaurants))
     // res.json(sortByPopularity(sortByOnline(data.restaurants)))
     //res.json({ "lon": lonVal, "lat": latVal })
-
+    res.json(response)
   } catch (error) {
     console.error("This is the error: ", error)
     res.json({ "Error": "Something went wrong!" })
