@@ -24,6 +24,7 @@ jobs:
 
       - name: Setup cache
         id: setup-cache-step
+        uses: actions/cache@v2
         with:
           path: ~/.npm
           key: ${{ runner.os }}-modules-${{ hashFiles('**/package-lock.json') }}
