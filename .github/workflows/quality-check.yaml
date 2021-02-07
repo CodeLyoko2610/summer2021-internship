@@ -39,7 +39,9 @@ jobs:
       #   run: npm start
 
       - name: Output
-        run: echo "Cache used? ${{ steps.setup-cache-step.outputs.cache-hit }}"
+        env:
+          CACHE_USED: ${{ steps.setup-cache-step.outputs.cache-hit }}
+        run: echo "Cache used? $CACHE_USED ."
 
       - name: Build
         run: npm run build
