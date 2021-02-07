@@ -58,9 +58,9 @@ http://localhost:3000/discovery?lon=24.950&lat=60.1709
 
 ## More concerns?
 
-I am more than happy to answer!\
-Email: dangchuongpham1999@gmail.com\
-GitHub: https://github.com/CodeLyoko2610\
+I am more than happy to answer! \
+Email: dangchuongpham1999@gmail.com \
+GitHub: https://github.com/CodeLyoko2610 \
 LinkedIn: https://www.linkedin.com/in/dang-chuong-pham-669041153/
 
 **Thank you for your time!**
