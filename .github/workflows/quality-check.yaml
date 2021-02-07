@@ -1,0 +1,44 @@
+name: Develop branch, npm workflow
+
+on:
+  push:
+    path:
+      - '**.ts'
+      - '!README.md'
+    branches:
+      - develop
+    tags-ignore:
+      - bypass-gh-actions
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup node
+        uses: actions/setup-node@v2
+        with:
+          node-version: '12.x'
+
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup cache
+        id: setup-cache-step
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-modules-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-modules-
+            ${{ runner.os }}-
+
+      - name: Install
+        run: npm ci
+
+      - name: Run
+        run: npm start
+
+      - name: Output
+        run: echo "Cache used? ${{ steps.setup-cache-step.outputs.cache-hit }}"
+
+      - name: Build
+        run: npm run build
