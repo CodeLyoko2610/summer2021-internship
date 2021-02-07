@@ -35,8 +35,8 @@ jobs:
       - name: Install
         run: npm ci
 
-      - name: Run
-        run: npm start
+      # - name: Run
+      #   run: npm start
 
       - name: Output
         run: echo "Cache used? ${{ steps.setup-cache-step.outputs.cache-hit }}"
